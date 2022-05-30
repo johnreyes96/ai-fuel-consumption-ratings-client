@@ -1,6 +1,17 @@
 import requests
-import xml.etree.ElementTree as ET
 
-SERVER_ACTIVE = 'http://localhost:8081'
+URL = 'http://localhost:8090'
 
-r = requests.get(SERVER_ACTIVE + '/TimeUTC')
+
+def populateDB():
+    requests.get(URL + '/populate-db')
+
+
+def getPersonRStats():
+    personRStats = requests.get(URL + '/person-stats')
+    print(personRStats.text)
+
+
+if __name__ == '__main__':
+    populateDB()
+    getPersonRStats()
