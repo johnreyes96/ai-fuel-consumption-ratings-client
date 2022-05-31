@@ -12,6 +12,12 @@ def getPersonRStats():
     print(personRStats.text)
 
 
+def linearRegressionFeatureImportance():
+    linearRegression = requests.get(URL + '/linear-regression-feature-importance')
+    print(linearRegression.text)
+
+
 if __name__ == '__main__':
-    populateDB()
-    getPersonRStats()
+    # populateDB()
+    # getPersonRStats()
+    linearRegressionFeatureImportance()
