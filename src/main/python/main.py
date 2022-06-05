@@ -27,7 +27,7 @@ def trainingDatasetToLinearRegression():
 
 
 def predictLinearRegression(X):
-    predictions = {'predictions': X}
+    predictions = {'samples': X}
     data = json.dumps(predictions)
     result = requests.post(URL + '/predict', data=data, headers={"Content-Type": "application/json"})
     print(result.text)
