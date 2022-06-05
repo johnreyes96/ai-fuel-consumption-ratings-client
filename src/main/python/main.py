@@ -1,6 +1,7 @@
 import requests
 from sklearn.linear_model import LinearRegression
 import pickle as pk
+import json
 
 URL = 'http://localhost:8090'
 
@@ -14,7 +15,7 @@ def getPersonRStats():
     print(personRStats.text)
 
 
-def getDatasetToLinearRegression():
+def trainningDatasetToLinearRegression():
     Dataset = requests.get(URL + '/dataset-linear-regression')
     X = Dataset.json()['X']
     y = Dataset.json()['y']
@@ -23,8 +24,17 @@ def getDatasetToLinearRegression():
                        '\\main\\resoures\\modelo.txt', 'wb')
     pk.dump(model, pickle_file)
 
+def predictLinearRegression():
+    Dataset = requests.get(URL + '/dataset-linear-regression')
+    X = Dataset.json()['X']
+    predictions = {'predictions': X}
+    data = json.dumps(predictions)
+    result = requests.post(URL + '/predict', data=data, headers={"Content-Type": "application/json"})
+    print(result.text)
+
 
 if __name__ == '__main__':
     # populateDB()
     # getPersonRStats()
-    getDatasetToLinearRegression()
+    trainningDatasetToLinearRegression()
+    predictLinearRegression()
