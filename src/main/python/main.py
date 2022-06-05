@@ -15,7 +15,7 @@ def getPersonRStats():
     print(personRStats.text)
 
 
-def trainningDatasetToLinearRegression():
+def trainingDatasetToLinearRegression():
     Dataset = requests.get(URL + '/dataset-linear-regression')
     X = Dataset.json()['X']
     y = Dataset.json()['y']
@@ -23,10 +23,10 @@ def trainningDatasetToLinearRegression():
     pickle_file = open('D:\\Users\\jhonf\\Documents\\Programacion\\Codigo\\Python\\ai-fuel-consumption-ratings\\src'
                        '\\main\\resoures\\modelo.txt', 'wb')
     pk.dump(model, pickle_file)
+    return X
 
-def predictLinearRegression():
-    Dataset = requests.get(URL + '/dataset-linear-regression')
-    X = Dataset.json()['X']
+
+def predictLinearRegression(X):
     predictions = {'predictions': X}
     data = json.dumps(predictions)
     result = requests.post(URL + '/predict', data=data, headers={"Content-Type": "application/json"})
@@ -34,7 +34,7 @@ def predictLinearRegression():
 
 
 if __name__ == '__main__':
-    # populateDB()
-    # getPersonRStats()
-    trainningDatasetToLinearRegression()
-    predictLinearRegression()
+    populateDB()
+    getPersonRStats()
+    samples = trainingDatasetToLinearRegression()
+    predictLinearRegression(samples)
